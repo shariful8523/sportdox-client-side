@@ -4,6 +4,7 @@ import Home from '../pages/Home';
 import AllEquipments from '../pages/AllEquipments';
 import AddEquipments from '../pages/AddEquipment';
 import MyEquipments from '../pages/MyEquipments';
+import ViewProduct from '../pages/ViewProduct';
 
 const router = createBrowserRouter([
     {
@@ -17,6 +18,7 @@ const router = createBrowserRouter([
             {
                 path: "/equipment",
                 element: <AllEquipments></AllEquipments>,
+                // loader: () => fetch('http://localhost:5000/products'),
             },
             {
                 path: "/addequipment",
@@ -25,6 +27,11 @@ const router = createBrowserRouter([
             {
                 path: "/my-equipment",
                 element: <MyEquipments></MyEquipments>,
+            },
+            {
+                path: "/viewProduct/:id",
+                element: <ViewProduct></ViewProduct>,
+                loader: ({params}) => fetch(`http://localhost:5000/products/${params.id}`)
             },
         ]
     },

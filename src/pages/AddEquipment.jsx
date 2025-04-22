@@ -29,7 +29,7 @@ const AddEquipment = () => {
 
         // Send to backend/database here
 
-        fetch('http://localhost:3000/products', {
+        fetch('http://localhost:5000/products', {
             method: "POST",
             headers: {
                 "content-type": "application/json",
