@@ -1,16 +1,18 @@
 import React from 'react';
 import BannerSlider from '../components/BannerSlider';
+import AllEquipments from '../pages/AllEquipments'
+
 
 const Home = () => {
     return (
         <div>
             <BannerSlider></BannerSlider>
 
-            {/* <section className="my-12">
-                AllEquipmentsSection 
+            <section className="my-12">
+                <AllEquipments></AllEquipments>
             </section>
 
-            <section className="my-12 bg-gray-50 py-8">
+            {/* <section className="my-12 bg-gray-50 py-8">
                 SportsCategory 
             </section>
 
@@ -22,7 +24,7 @@ const Home = () => {
                 Testimonials 
             </section> */}
 
-            
+
         </div>
     );
 };
