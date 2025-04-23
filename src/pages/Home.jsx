@@ -1,6 +1,7 @@
 import React from 'react';
 import BannerSlider from '../components/BannerSlider';
 import AllEquipments from '../pages/AllEquipments'
+import Testimonials from '../components/testimonials';
 
 
 const Home = () => {
@@ -18,11 +19,11 @@ const Home = () => {
 
             <section className="my-12">
                 hyChooseUs 
-            </section>
+            </section> */}
 
             <section className="my-12 bg-gradient-to-r from-green-100 to-blue-100 py-8">
-                Testimonials 
-            </section> */}
+                <Testimonials></Testimonials>
+            </section> 
 
 
         </div>

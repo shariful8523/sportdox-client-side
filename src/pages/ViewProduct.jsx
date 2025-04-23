@@ -8,6 +8,13 @@ const ProductCard = () => {
   const loadProductDetails = useLoaderData();
   const { _id, image, itemName, categoryName, price, rating, description, customization, processingTime, stockStatus } = loadProductDetails;
 
+   
+
+
+
+
+
+  // delete product 
   const handelDelete = _id => {
     console.log(_id);
 
@@ -70,7 +77,7 @@ const ProductCard = () => {
 
         {/* Buttons */}
         <div className="flex gap-4 mt-6">
-          <button className="bg-blue-500 text-white py-2 px-4 rounded-lg hover:bg-blue-600 transition">Update</button>
+         <Link to={`/updateProduct/${_id}`}> <button  className="bg-blue-500 text-white py-2 px-4 rounded-lg hover:bg-blue-600 transition">Update</button> </Link> 
           <button onClick={() => handelDelete(_id)} className="bg-red-500 text-white py-2 px-4 rounded-lg hover:bg-red-600 transition">Delete</button>
         </div>
       </div>
