@@ -1,31 +1,68 @@
 import React, { useContext, useEffect, useState } from 'react';
 import { AuthContext } from '../provider/AuthProvider';
-
+import { Link } from 'react-router-dom';
+import Swal from 'sweetalert2';
 
 const MyEquipments = () => {
-    const { user } = useContext(AuthContext); // লগইন করা ইউজারের তথ্য নেয়া
+    const { user } = useContext(AuthContext);
+   
     const [equipments, setEquipments] = useState([]);
-    const [loading, setLoading] = useState(true); // লোডিং স্টেট
+    const [loading, setLoading] = useState(true);
 
     useEffect(() => {
-        // যদি ইউজার লগইন থাকে
         if (user) {
-            setLoading(true); // লোডিং শুরু
-            // ইউজারের ইমেইল দিয়ে পণ্য ফেচ করা
+            setLoading(true);
             fetch(`http://localhost:5000/products?userEmail=${user.email}`)
                 .then(res => res.json())
                 .then(data => {
                     setEquipments(data);
-                    setLoading(false); // লোডিং শেষ
+                    setLoading(false);
                 })
                 .catch(err => {
                     console.error(err);
-                    setLoading(false); // লোডিং শেষ
+                    setLoading(false);
                 });
         } else {
-            setLoading(false); // যদি ইউজার লগইন না থাকে
+            setLoading(false);
         }
     }, [user]);
+
+    const handelDelete = _id => {
+        Swal.fire({
+            title: "Are you sure?",
+            text: "You won't be able to revert this!",
+            icon: "warning",
+            showCancelButton: true,
+            confirmButtonColor: "#3085d6",
+            cancelButtonColor: "#d33",
+            confirmButtonText: "Yes, delete it!"
+        }).then((result) => {
+            if (result.isConfirmed) {
+                fetch(`http://localhost:5000/products/${_id}`, {
+                    method: 'DELETE'
+                })
+                    .then(res => res.json())
+                    .then(data => {
+                        console.log(data);
+                        if (data.deletedCount > 0) {  
+                            Swal.fire({
+                                title: "Deleted!",
+                                text: "Your product has been deleted.",
+                                icon: "success"
+                            });
+    
+                           
+                            const remaining = equipments.filter(item => item._id !== _id);
+                            setEquipments(remaining);
+                        }
+                    })
+                    .catch(err => {
+                        console.error(err);
+                    });
+            }
+        });
+    };
+    
 
     if (loading) {
         return <div>Loading...</div>;
@@ -33,10 +70,8 @@ const MyEquipments = () => {
 
     return (
         <div>
-      
             <div className="overflow-x-auto">
                 <table className="table">
-                    {/* Table Header */}
                     <thead>
                         <tr>
                             <th>Image and Name</th>
@@ -45,8 +80,6 @@ const MyEquipments = () => {
                             <th>Actions</th>
                         </tr>
                     </thead>
-
-                    {/* Table Body */}
                     <tbody>
                         {equipments.length > 0 ? (
                             equipments.map((item) => (
@@ -70,8 +103,12 @@ const MyEquipments = () => {
                                     <td>{item.description}</td>
                                     <td>${item.price}</td>
                                     <td>
-                                        <button className="btn btn-ghost btn-xs">Update</button>
-                                        <button className="btn btn-ghost btn-xs">Delete</button>
+                                        <div className="flex gap-2">
+                                            <Link to={`/updateProduct/${item._id}`}>
+                                                <button className="bg-blue-500 text-white py-2 px-4 rounded-lg hover:bg-blue-600 transition">Update</button>
+                                            </Link>
+                                            <button onClick={() => handelDelete(item._id)} className="bg-red-500 text-white py-2 px-4 rounded-lg hover:bg-red-600 transition">Delete</button>
+                                        </div>
                                     </td>
                                 </tr>
                             ))
@@ -83,7 +120,7 @@ const MyEquipments = () => {
                     </tbody>
                 </table>
             </div>
-        </div>
+        </div >
     );
 };
 

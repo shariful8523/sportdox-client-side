@@ -1,10 +1,10 @@
 import React from 'react';
 import { FaStar } from 'react-icons/fa';
-import { Link, useLoaderData, useNavigate } from 'react-router-dom';
-import Swal from 'sweetalert2';
+import { useLoaderData } from 'react-router-dom';
+
 
 const ProductCard = () => {
-  const navigate = useNavigate();
+ 
   const loadProductDetails = useLoaderData();
   const { _id, image, itemName, categoryName, price, rating, description, customization, processingTime, stockStatus } = loadProductDetails;
 
@@ -14,41 +14,7 @@ const ProductCard = () => {
 
 
 
-  // delete product 
-  const handelDelete = _id => {
-    console.log(_id);
-
-    Swal.fire({
-      title: "Are you sure?",
-      text: "You won't be able to revert this!",
-      icon: "warning",
-      showCancelButton: true,
-      confirmButtonColor: "#3085d6",
-      cancelButtonColor: "#d33",
-      confirmButtonText: "Yes, delete it!"
-    }).then((result) => {
-      if (result.isConfirmed) {
-
-        fetch(`http://localhost:5000/products/${_id}`, {
-          method: 'DELETE'
-        })
-          .then(res => res.json())
-          .then(data => {
-            console.log(data);
-            Swal.fire({
-              title: "Deleted!",
-              text: "Your product has been deleted.",
-              icon: "success"
-            })
-            .then(() => {
-              navigate("/");
-            })
-
-
-          })
-      }
-    });
-  }
+ 
 
 
   return (
@@ -77,8 +43,7 @@ const ProductCard = () => {
 
         {/* Buttons */}
         <div className="flex gap-4 mt-6">
-         <Link to={`/updateProduct/${_id}`}> <button  className="bg-blue-500 text-white py-2 px-4 rounded-lg hover:bg-blue-600 transition">Update</button> </Link> 
-          <button onClick={() => handelDelete(_id)} className="bg-red-500 text-white py-2 px-4 rounded-lg hover:bg-red-600 transition">Delete</button>
+          <button className="bg-red-500 text-white py-2 px-4 rounded-lg hover:bg-red-600 transition"> BUY NOW </button>
         </div>
       </div>
     </div>

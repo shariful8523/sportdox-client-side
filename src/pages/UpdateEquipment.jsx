@@ -6,8 +6,8 @@ const UpdateEquipment = () => {
     const loadupdateproduct = useLoaderData();
 
     const {
-        _id, image, itemName, categoryName, price, rating, description,
-        customization, processingTime, stockStatus, userEmail, userName
+        _id, image, itemName, category, price, rating, description,
+        customization, processingTime, stock, userEmail, userName
     } = loadupdateproduct;
 
     const handleUpdate = (e) => {
@@ -71,10 +71,10 @@ const UpdateEquipment = () => {
             <form onSubmit={handleUpdate} className="grid grid-cols-1 md:grid-cols-2 gap-6">
                 <input type="text" name="image" defaultValue={image} placeholder="Image URL" className="input input-bordered w-full" required />
                 <input type="text" name="itemName" defaultValue={itemName} placeholder="Item Name" className="input input-bordered w-full" required />
-                <input type="text" name="category" defaultValue={categoryName} placeholder="Category Name" className="input input-bordered w-full" required />
+                <input type="text" name="category" defaultValue={category} placeholder="Category Name" className="input input-bordered w-full" required />
                 <input type="text" name="price" defaultValue={price} placeholder="Price" className="input input-bordered w-full" required />
                 <input type="text" name="rating" defaultValue={rating} placeholder="Rating (e.g. 4.5)" className="input input-bordered w-full" required />
-                <input type="text" name="stock" defaultValue={stockStatus} placeholder="Stock Status (Quantity)" className="input input-bordered w-full" required />
+                <input type="text" name="stock" defaultValue={stock} placeholder="Stock Status (Quantity)" className="input input-bordered w-full" required />
                 <input type="text" name="processingTime" defaultValue={processingTime} placeholder="Processing Time (e.g. 3-5 days)" className="input input-bordered w-full" required />
                 <input type="text" name="customization" defaultValue={customization} placeholder="Customization (e.g. bat with extra grip)" className="input input-bordered w-full" />
                 <textarea name="description" defaultValue={description} placeholder="Description" className="textarea textarea-bordered w-full col-span-1 md:col-span-2" required></textarea>
