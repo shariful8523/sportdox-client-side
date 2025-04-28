@@ -1,13 +1,42 @@
-import React from 'react';
-import { NavLink } from 'react-router-dom';
-import logo from '../assets/logo.png'
+import React, { useContext } from 'react';
+import { NavLink, Link } from 'react-router-dom';
+import logo from '../assets/logo.png';
+import { AuthContext } from '../provider/AuthProvider';
+import Swal from 'sweetalert2';
+
 const Navbar = () => {
-    const links = <>
-        <li><NavLink to="/">Home</NavLink></li>
-        <li><NavLink to="/equipment">All Sports Equipment</NavLink></li>
-        <li><NavLink to="/addequipment">Add Equipment</NavLink></li>
-        <li><NavLink to="/my-equipment">My Equipment List</NavLink></li>
-    </>;
+    const { user, logoutUser, loading } = useContext(AuthContext);
+
+    const handleLogout = () => {
+        logoutUser()
+            .then(() => {
+                Swal.fire({
+                    icon: 'success',
+                    title: 'Logged Out!',
+                    text: 'You have been logged out successfully!',
+                    timer: 1500,
+                    confirmButtonText: 'Cool'
+                });
+            })
+            .catch(err => console.error(err));
+    }
+
+    const links = (
+        <>
+            <li><NavLink to="/">Home</NavLink></li>
+            <li><NavLink to="/equipment">All Sports Equipment</NavLink></li>
+            <li><NavLink to="/addequipment">Add Equipment</NavLink></li>
+            <li><NavLink to="/my-equipment">My Equipment List</NavLink></li>
+        </>
+    );
+
+    if (loading) {
+        return (
+            <div className="flex justify-center items-center h-screen">
+                <span className="loading loading-spinner loading-lg text-blue-500"></span>
+            </div>
+        );
+    }
 
     return (
         <div className="navbar bg-base-100 shadow-sm">
@@ -22,7 +51,7 @@ const Navbar = () => {
                         {links}
                     </ul>
                 </div>
-                <img className='w-10' src={logo} alt="" />
+                <img className='w-10' src={logo} alt="Logo" />
                 <NavLink to="/" className="btn btn-ghost normal-case text-xl">sportdox</NavLink>
             </div>
 
@@ -33,8 +62,21 @@ const Navbar = () => {
             </div>
 
             <div className="navbar-end">
-                <NavLink to="/login" className="btn btn-sm mr-2">Login</NavLink>
-                <NavLink to="/register" className="btn btn-sm">Register</NavLink>
+                {
+                    user ? (
+                        <div className="flex items-center gap-3">
+                            {/* User Name */}
+                            <span className="font-semibold text-gray-700">{user.displayName}</span>
+                            {/* Logout button */}
+                            <button onClick={handleLogout} className="btn btn-sm btn-error">Logout</button>
+                        </div>
+                    ) : (
+                        <>
+                            <NavLink to="/login" className="btn btn-sm mr-2">Login</NavLink>
+                            <NavLink to="/register" className="btn btn-sm">Register</NavLink>
+                        </>
+                    )
+                }
             </div>
         </div>
     );

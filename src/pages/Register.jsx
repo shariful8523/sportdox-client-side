@@ -3,6 +3,7 @@ import { FcGoogle } from 'react-icons/fc';
 import { Link, Navigate } from 'react-router-dom';
 import { AuthContext } from '../provider/AuthProvider';
 import Swal from 'sweetalert2';
+import { updateProfile } from 'firebase/auth'; // ✅ এটাও ইম্পোর্ট করতে হবে
 
 const Register = () => {
     const { createUser } = useContext(AuthContext);
@@ -16,37 +17,50 @@ const Register = () => {
         const email = event.target.email.value;
         const password = event.target.password.value;
 
-        console.log(name, email, password)
+        console.log(name, email, password);
 
         createUser(email, password)
             .then(result => {
-                console.log(result.user)
+                const user = result.user;
+                console.log(user);
 
-                const newUser = { name, photo, email }
-                // save user to database 
-                fetch('http://localhost:5000/users', {
-                    method: 'POST',
-                    headers: {
-                        'content-type': 'application/json'
-                    },
-                    body: JSON.stringify(newUser)
+                // ✅ user profile update
+                updateProfile(user, {
+                    displayName: name,
+                    photoURL: photo
                 })
-                    .then(res => res.json())
-                    .then(data => {
-                        console.log(data)
-                        if (data.insertedId) {
-                            Swal.fire({
-                                title: 'Success!',
-                                text: 'Registration Successfully',
-                                icon: 'success',
-                                confirmButtonText: 'Cool'
-                            });
-                            setRedirect(true); 
-                        }
+                .then(() => {
+                    // profile updated successfully
+                    console.log('Profile Updated');
+                    
+                    // ✅ save user to database 
+                    const newUser = { name, photo, email };
+                    fetch('http://localhost:5000/users', {
+                        method: 'POST',
+                        headers: {
+                            'content-type': 'application/json'
+                        },
+                        body: JSON.stringify(newUser)
                     })
+                        .then(res => res.json())
+                        .then(data => {
+                            console.log(data)
+                            if (data.insertedId) {
+                                Swal.fire({
+                                    title: 'Success!',
+                                    text: 'Registration Successfully',
+                                    icon: 'success',
+                                    confirmButtonText: 'Cool'
+                                });
+                                setRedirect(true); 
+                            }
+                        })
+                })
+                .catch(error => console.log(error));
+
             })
             .catch(error => {
-                console.log(error)
+                console.log(error);
             })
     }
 
@@ -65,6 +79,7 @@ const Register = () => {
                         type="text"
                         id="name"
                         name='name'
+                        required
                         className="w-full px-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-400"
                         placeholder="Enter your name"
                     />
@@ -76,6 +91,7 @@ const Register = () => {
                         type="email"
                         id="email"
                         name='email'
+                        required
                         className="w-full px-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-400"
                         placeholder="Enter your email"
                     />
@@ -87,6 +103,7 @@ const Register = () => {
                         type="text"
                         id="photo"
                         name='photo'
+                        required
                         className="w-full px-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-400"
                         placeholder="Enter photo URL"
                     />
@@ -98,6 +115,7 @@ const Register = () => {
                         type="password"
                         id="password"
                         name='password'
+                        required
                         className="w-full px-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-400"
                         placeholder="Enter your password"
                     />

@@ -1,10 +1,11 @@
-import Swal from 'sweetalert2'
+import React, { useContext } from 'react';
+
+import Swal from 'sweetalert2';
+import { AuthContext } from '../provider/AuthProvider';
+
 
 const AddEquipment = () => {
-    const loggedUser = {
-        name: "John Doe",
-        email: "john@example.com"
-    };
+    const { user } = useContext(AuthContext); 
 
     const handleAdd = (e) => {
         e.preventDefault();
@@ -19,16 +20,14 @@ const AddEquipment = () => {
         const processingTime = form.processingTime.value;
         const customization = form.customization.value;
         const description = form.description.value;
-        const userEmail = form.userEmail.value;
-        const userName = form.userName.value;
-
+        const userEmail = user?.email;  
+        const userName = user?.displayName || "Anonymous";  
 
         const formData = { image, itemName, category, price, rating, stock, processingTime, customization, description, userEmail, userName }
 
         console.log(formData)
 
         // Send to backend/database here
-
         fetch('http://localhost:5000/products', {
             method: "POST",
             headers: {
@@ -66,8 +65,8 @@ const AddEquipment = () => {
                 <input type="text" name="customization" placeholder="Customization (e.g. bat with extra grip)" className="input input-bordered w-full" />
                 <textarea name="description" placeholder="Description" className="textarea textarea-bordered w-full col-span-1 md:col-span-2" required></textarea>
 
-                <input type="email" name="userEmail" value={loggedUser.email} className="input input-bordered w-full bg-gray-100" />
-                <input type="text" name="userName" value={loggedUser.name} className="input input-bordered w-full bg-gray-100" />
+                <input type="email" name="userEmail" value={user?.email} className="input input-bordered w-full bg-gray-100" readOnly />
+                <input type="text" name="userName" value={user?.displayName || "Anonymous"} className="input input-bordered w-full bg-gray-100" readOnly />
 
                 <div className="col-span-1 md:col-span-2">
                     <button type="submit" className="btn btn-primary w-full">Add Equipment</button>
