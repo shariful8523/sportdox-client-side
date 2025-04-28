@@ -8,11 +8,14 @@ import ViewProduct from '../pages/ViewProduct';
 import UpdateEquipment from '../pages/UpdateEquipment';
 import Login from '../pages/Login';
 import Register from '../pages/Register';
+import ErrorPage from '../pages/ErrorPage';
+import PrivateRoute from '../layouts/PrivateRoute';
 
 const router = createBrowserRouter([
     {
         path: "/",
         element: <MainLayout></MainLayout>,
+        errorElement: <ErrorPage></ErrorPage>,
         children: [
             {
                 index: true,
@@ -25,20 +28,28 @@ const router = createBrowserRouter([
             },
             {
                 path: "/addequipment",
-                element: <AddEquipments></AddEquipments>,
+                element: (<PrivateRoute>
+                    <AddEquipments></AddEquipments>
+                </PrivateRoute>) ,
             },
             {
                 path: "/my-equipment",
-                element: <MyEquipments></MyEquipments>,
+                element: (<PrivateRoute>
+                    <MyEquipments></MyEquipments>
+                </PrivateRoute>)  ,
             },
             {
                 path: "/viewProduct/:id",
-                element: <ViewProduct></ViewProduct>,
+                element: (<PrivateRoute>
+                    <ViewProduct></ViewProduct>
+                </PrivateRoute>) ,
                 loader: ({params}) => fetch(`http://localhost:5000/products/${params.id}`)
             },
             {
                 path: "/updateProduct/:id",
-                element: <UpdateEquipment></UpdateEquipment>,
+                element:(<PrivateRoute>
+                    <UpdateEquipment></UpdateEquipment>
+                </PrivateRoute>  ) ,
                 loader: ({params}) => fetch(`http://localhost:5000/products/${params.id}`)
 
             },

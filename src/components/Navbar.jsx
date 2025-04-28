@@ -1,11 +1,12 @@
 import React, { useContext } from 'react';
-import { NavLink, Link } from 'react-router-dom';
+import { NavLink, Link, useNavigate } from 'react-router-dom';
 import logo from '../assets/logo.png';
 import { AuthContext } from '../provider/AuthProvider';
 import Swal from 'sweetalert2';
 
 const Navbar = () => {
     const { user, logoutUser, loading } = useContext(AuthContext);
+    const navigate = useNavigate(); 
 
     const handleLogout = () => {
         logoutUser()
@@ -17,9 +18,10 @@ const Navbar = () => {
                     timer: 1500,
                     confirmButtonText: 'Cool'
                 });
+                navigate('/'); 
             })
             .catch(err => console.error(err));
-    }
+    };
 
     const links = (
         <>
@@ -66,7 +68,7 @@ const Navbar = () => {
                     user ? (
                         <div className="flex items-center gap-3">
                             {/* User Name */}
-                            <span className="font-semibold text-gray-700">{user.displayName}</span>
+                            <span className="font-semibold text-gray-700">{user.displayName || 'User'}</span>
                             {/* Logout button */}
                             <button onClick={handleLogout} className="btn btn-sm btn-error">Logout</button>
                         </div>
