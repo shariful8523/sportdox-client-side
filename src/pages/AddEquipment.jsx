@@ -25,7 +25,7 @@ const AddEquipment = () => {
 
         const formData = { image, itemName, category, price, rating, stock, processingTime, customization, description, userEmail, userName }
 
-        console.log(formData)
+        
 
         // Send to backend/database here
         fetch('http://localhost:5000/products', {
@@ -37,7 +37,7 @@ const AddEquipment = () => {
         })
             .then(res => res.json())
             .then(data => {
-                console.log(data)
+               
                 if (data.insertedId) {
                     Swal.fire({
                         title: 'Success!',

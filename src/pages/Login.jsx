@@ -15,7 +15,7 @@ const Login = () => {
 
         loginUser(email, password)
             .then(result => {
-                console.log(result)
+               
                 Swal.fire({
                     title: 'Success!',
                     text: 'Login Successfully',
@@ -25,7 +25,7 @@ const Login = () => {
                 setRedirect(true);
             })
             .catch(error => {
-                console.log(error)
+              
                 Swal.fire({
                     title: 'Login Failed!',
                     text: 'email and password not match',
@@ -38,7 +38,7 @@ const Login = () => {
     const handleGoogleLogin = () => {
         googleLogin()
             .then(result => {
-                console.log(result)
+               
                 Swal.fire({
                     title: 'Success!',
                     text: 'Google Login Successful',

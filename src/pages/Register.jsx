@@ -17,7 +17,7 @@ const Register = () => {
         const email = event.target.email.value;
         const password = event.target.password.value;
 
-        console.log(name, email, password);
+       
 
         // ✅ Password Validation
         const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z]).{6,}$/;
@@ -35,7 +35,7 @@ const Register = () => {
         createUser(email, password)
             .then(result => {
                 const user = result.user;
-                console.log(user);
+               
 
                 // ✅ Update user profile
                 updateProfile(user, {
@@ -43,7 +43,7 @@ const Register = () => {
                     photoURL: photo
                 })
                 .then(() => {
-                    console.log('Profile Updated');
+                  
 
                     // ✅ Save user to database
                     const newUser = { name, photo, email };
@@ -56,7 +56,7 @@ const Register = () => {
                     })
                         .then(res => res.json())
                         .then(data => {
-                            console.log(data);
+                            
                             if (data.insertedId) {
                                 Swal.fire({
                                     title: 'Success!',
@@ -68,12 +68,10 @@ const Register = () => {
                             }
                         });
                 })
-                .catch(error => console.log(error));
+                
 
             })
-            .catch(error => {
-                console.log(error);
-            });
+            
     };
 
     if (redirect) {

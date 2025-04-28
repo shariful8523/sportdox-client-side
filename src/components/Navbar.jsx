@@ -53,7 +53,7 @@ const Navbar = () => {
                         {links}
                     </ul>
                 </div>
-                <img className='w-10' src={logo} alt="Logo" />
+                <img className='w-10 hidden  md:block  lg:block	 ' src={logo} alt="Logo" />
                 <NavLink to="/" className="btn btn-ghost normal-case text-xl">sportdox</NavLink>
             </div>
 
@@ -68,7 +68,7 @@ const Navbar = () => {
                     user ? (
                         <div className="flex items-center gap-3">
                             {/* User Name */}
-                            <span className="font-semibold text-gray-700">{user.displayName || 'User'}</span>
+                            <span className=" hidden  md:block  lg:block  font-semibold text-gray-700">{user.displayName || 'User'}</span>
                             {/* Logout button */}
                             <button onClick={handleLogout} className="btn btn-sm btn-error">Logout</button>
                         </div>
