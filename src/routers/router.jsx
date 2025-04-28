@@ -6,6 +6,8 @@ import AddEquipments from '../pages/AddEquipment';
 import MyEquipments from '../pages/MyEquipments';
 import ViewProduct from '../pages/ViewProduct';
 import UpdateEquipment from '../pages/UpdateEquipment';
+import Login from '../pages/Login';
+import Register from '../pages/Register';
 
 const router = createBrowserRouter([
     {
@@ -39,6 +41,14 @@ const router = createBrowserRouter([
                 element: <UpdateEquipment></UpdateEquipment>,
                 loader: ({params}) => fetch(`http://localhost:5000/products/${params.id}`)
 
+            },
+            {
+                path: "/login",
+                element: <Login></Login>
+            },
+            {
+                path: "/register",
+                element: <Register></Register>
             },
         
         ]
