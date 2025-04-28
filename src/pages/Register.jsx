@@ -1,11 +1,13 @@
-import React, { useContext } from 'react';
+import React, { useContext, useState } from 'react';
 import { FcGoogle } from 'react-icons/fc';
-import { Link } from 'react-router-dom';
+import { Link, Navigate } from 'react-router-dom';
 import { AuthContext } from '../provider/AuthProvider';
 import Swal from 'sweetalert2';
 
 const Register = () => {
     const { createUser } = useContext(AuthContext);
+    const [redirect, setRedirect] = useState(false); 
+
     const handelRegister = event => {
         event.preventDefault();
 
@@ -22,7 +24,6 @@ const Register = () => {
 
                 const newUser = { name, photo, email }
                 // save user to database 
-
                 fetch('http://localhost:5000/users', {
                     method: 'POST',
                     headers: {
@@ -39,19 +40,19 @@ const Register = () => {
                                 text: 'Registration Successfully',
                                 icon: 'success',
                                 confirmButtonText: 'Cool'
-                            })
+                            });
+                            setRedirect(true); 
                         }
                     })
             })
             .catch(error => {
                 console.log(error)
             })
-
-
-           
     }
 
-
+    if (redirect) {
+        return <Navigate to="/login" />; 
+    }
 
     return (
         <div className="flex justify-center items-center min-h-screen bg-gray-100 px-4">

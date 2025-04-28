@@ -1,18 +1,66 @@
-import React from 'react';
+import React, { useContext, useState } from 'react';
 import { FcGoogle } from 'react-icons/fc';
-import { Link } from 'react-router-dom';
+import { Link, Navigate } from 'react-router-dom';
+import { AuthContext } from '../provider/AuthProvider';
+import Swal from 'sweetalert2';
 
 const Login = () => {
+
+    const { loginUser } = useContext(AuthContext);
+    const [redirect, setRedirect] = useState(false);
+
+    const handellogin = event => {
+
+        event.preventDefault();
+
+        const email = event.target.email.value;
+        const password = event.target.password.value;
+
+        console.log(email, password);
+
+
+        loginUser(email, password)
+            .then(result => {
+                console.log(result.user)
+                Swal.fire({
+                    title: 'Success!',
+                    text: 'Login Successfully',
+                    icon: 'success',
+                    confirmButtonText: 'Cool'
+                });
+                setRedirect(true);
+
+            })
+            .catch(error => {
+                console.log(error)
+                Swal.fire({
+                    title: 'Login Failed!',
+                    text: 'email and password not match',
+                    icon: 'error',
+                    confirmButtonText: 'Try Again'
+                });
+            })
+
+
+
+
+    }
+
+    if (redirect) {
+        return <Navigate to="/" />;
+    }
+
     return (
         <div className="flex justify-center items-center min-h-screen bg-gray-100 px-4">
-            <form className="bg-white p-8 rounded-lg shadow-md w-full max-w-md">
+            <form onSubmit={handellogin} className="bg-white p-8 rounded-lg shadow-md w-full max-w-md">
                 <h2 className="text-2xl font-bold mb-6 text-center">Sign In</h2>
 
                 <div className="mb-4">
                     <label className="block text-gray-700 mb-2" htmlFor="email">Email</label>
-                    <input 
-                        type="email" 
+                    <input
+                        type="email"
                         id="email"
+                        name='email'
                         className="w-full px-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-400"
                         placeholder="Enter your email"
                     />
@@ -20,15 +68,16 @@ const Login = () => {
 
                 <div className="mb-6">
                     <label className="block text-gray-700 mb-2" htmlFor="password">Password</label>
-                    <input 
-                        type="password" 
+                    <input
+                        type="password"
                         id="password"
+                        name='password'
                         className="w-full px-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-400"
                         placeholder="Enter your password"
                     />
                 </div>
 
-                <button 
+                <button
                     type="submit"
                     className="w-full bg-blue-500 text-white py-2 rounded-md hover:bg-blue-600 transition"
                 >
@@ -41,7 +90,7 @@ const Login = () => {
                     <div className="flex-grow h-px bg-gray-300"></div>
                 </div>
 
-                <button 
+                <button
                     type="button"
                     className="flex items-center justify-center gap-3 w-full border border-gray-400 py-2 rounded-md hover:bg-gray-100 transition"
                 >
