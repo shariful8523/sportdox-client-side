@@ -24,7 +24,7 @@ const router = createBrowserRouter([
             {
                 path: "/equipment",
                 element: <AllEquipments></AllEquipments>,
-                // loader: () => fetch('http://localhost:5000/products'),
+                // loader: () => fetch('https://sportdox-server-side.vercel.app/products'),
             },
             {
                 path: "/addequipment",
@@ -43,14 +43,14 @@ const router = createBrowserRouter([
                 element: (<PrivateRoute>
                     <ViewProduct></ViewProduct>
                 </PrivateRoute>) ,
-                loader: ({params}) => fetch(`http://localhost:5000/products/${params.id}`)
+                loader: ({params}) => fetch(`https://sportdox-server-side.vercel.app/products/${params.id}`)
             },
             {
                 path: "/updateProduct/:id",
                 element:(<PrivateRoute>
                     <UpdateEquipment></UpdateEquipment>
                 </PrivateRoute>  ) ,
-                loader: ({params}) => fetch(`http://localhost:5000/products/${params.id}`)
+                loader: ({params}) => fetch(`https://sportdox-server-side.vercel.app/products/${params.id}`)
 
             },
             {

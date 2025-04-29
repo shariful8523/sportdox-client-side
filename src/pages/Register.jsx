@@ -47,7 +47,7 @@ const Register = () => {
 
                     // ✅ Save user to database
                     const newUser = { name, photo, email };
-                    fetch('http://localhost:5000/users', {
+                    fetch('https://sportdox-server-side.vercel.app/users', {
                         method: 'POST',
                         headers: {
                             'content-type': 'application/json'

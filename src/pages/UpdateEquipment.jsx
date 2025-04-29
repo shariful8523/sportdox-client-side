@@ -31,7 +31,7 @@ const UpdateEquipment = () => {
             description, userEmail, userName
         };
 
-        fetch(`http://localhost:5000/products/${_id}`, {
+        fetch(`https://sportdox-server-side.vercel.app/products/${_id}`, {
             method: "PUT",
             headers: {
                 "content-type": "application/json",

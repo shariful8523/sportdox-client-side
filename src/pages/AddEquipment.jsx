@@ -28,7 +28,7 @@ const AddEquipment = () => {
         
 
         // Send to backend/database here
-        fetch('http://localhost:5000/products', {
+        fetch('https://sportdox-server-side.vercel.app/products', {
             method: "POST",
             headers: {
                 "content-type": "application/json",

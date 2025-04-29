@@ -1,6 +1,8 @@
 import React from 'react';
 import { Plane, CreditCard, RefreshCw, Trophy, Gem } from 'lucide-react'; 
 
+
+
 const FeaturesSection = () => {
     const features = [
         {
@@ -32,6 +34,7 @@ const FeaturesSection = () => {
 
     return (
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-6 px-6 py-10 bg-white">
+            
             {features.map((feature, index) => (
                 <div key={index} className="text-center border-r last:border-none px-4">
                     <div className="flex justify-center mb-3">
@@ -41,6 +44,7 @@ const FeaturesSection = () => {
                     <p className="text-sm text-gray-600">{feature.description}</p>
                 </div>
             ))}
+           
         </div>
     );
 };

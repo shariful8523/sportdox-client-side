@@ -8,6 +8,7 @@ const ProductCard = ({ product }) => {
 
     return (
         <div className="card w-80 bg-white shadow-xl rounded-2xl overflow-hidden">
+              
             <img src={image} alt={itemName} className="h-48 w-full object-cover" />
             <div className="p-4">
                 <h2 className="text-xl font-semibold text-gray-800 mb-1">{itemName}</h2>
@@ -21,6 +22,7 @@ const ProductCard = ({ product }) => {
                     <Link to={`/viewProduct/${_id}`} className="btn btn-sm btn-primary w-full">View Details</Link>
                 </div>
             </div>
+
         </div>
     );
 };

@@ -11,7 +11,7 @@ const MyEquipments = () => {
     useEffect(() => {
         if (user) {
             setLoading(true);
-            fetch(`http://localhost:5000/products?userEmail=${user.email}`)
+            fetch(`https://sportdox-server-side.vercel.app/products?userEmail=${user.email}`)
                 .then(res => res.json())
                 .then(data => {
                     setEquipments(data);
@@ -37,7 +37,7 @@ const MyEquipments = () => {
             confirmButtonText: "Yes, delete it!"
         }).then((result) => {
             if (result.isConfirmed) {
-                fetch(`http://localhost:5000/products/${_id}`, {
+                fetch(`https://sportdox-server-side.vercel.app/products/${_id}`, {
                     method: 'DELETE'
                 })
                     .then(res => res.json())
